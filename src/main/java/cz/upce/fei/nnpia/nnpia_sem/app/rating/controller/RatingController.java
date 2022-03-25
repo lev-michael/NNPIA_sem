@@ -1,11 +1,14 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.rating.controller;
 
+import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.dto.CreateUpdateRatingDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.service.RatingService;
 import cz.upce.fei.nnpia.nnpia_sem.app.watchlist.dto.UserIdMovieIdDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -18,6 +21,16 @@ public class RatingController {
     @GetMapping("/")
     private Rating findRating(@RequestBody() UserIdMovieIdDto userIdMovieIdDto) {
         return this.ratingService.getRating(userIdMovieIdDto);
+    }
+
+    @GetMapping("/avg")
+    private double findAvgRating(@RequestBody() Long movieId) {
+        return this.ratingService.getAvgRating(movieId);
+    }
+
+    @GetMapping("/top")
+    private List<Movie> findAvgRating() {
+        return this.ratingService.getBestMovies();
     }
 
     @PostMapping("/delete")

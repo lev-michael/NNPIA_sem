@@ -10,8 +10,10 @@ import cz.upce.fei.nnpia.nnpia_sem.app.user.entity.User;
 import cz.upce.fei.nnpia.nnpia_sem.app.user.repository.UserRepository;
 import cz.upce.fei.nnpia.nnpia_sem.app.watchlist.dto.UserIdMovieIdDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,4 +48,11 @@ public class RatingService {
         return ratingRepository.save(rating);
     }
 
+    public double getAvgRating(Long movieId) {
+        return ratingRepository.findAvgRating(movieId);
+    }
+
+    public List<Movie> getBestMovies() {
+        return ratingRepository.findBestMovies(PageRequest.of(0, 10));
+    }
 }
