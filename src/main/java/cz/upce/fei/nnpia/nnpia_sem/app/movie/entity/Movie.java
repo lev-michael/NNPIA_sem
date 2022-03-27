@@ -1,13 +1,14 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.movie.entity;
 
-import cz.upce.fei.nnpia.nnpia_sem.app.actor.entity.Actor;
 import cz.upce.fei.nnpia.nnpia_sem.app.genre.entity.Genre;
+import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -27,14 +28,17 @@ public class Movie {
 
     @Column
     @Min(1)
-    private int length;
+    private int runtime;
 
     @Column
     @NotBlank
-    private int launchYear;
+    private Date release_date;
 
     @OneToMany(mappedBy = "id")
-    private Set<Actor> actors;
+    private Set<Person> actors;
+
+    @OneToMany(mappedBy = "id")
+    private Set<Person> crew;
 
     @OneToMany(mappedBy = "movie")
     private Set<Rating> scores;

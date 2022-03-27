@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 
-@Entity
+@Entity(name = "movie_genres")
 @IdClass(ComposedGenreMovieId.class)
 public class GenreMovies {
     @ManyToOne
