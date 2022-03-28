@@ -1,5 +1,6 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.person.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -19,10 +20,12 @@ public class Person {
     private String name;
 
     @Column
+    @JsonIgnoreProperties({"actors", "crew"})
     @OneToMany(mappedBy = "id")
     private List<Movie> cast_movies;
 
     @Column
+    @JsonIgnoreProperties({"actors", "crew"})
     @OneToMany(mappedBy = "id")
     private List<Movie> crew_movies;
 }

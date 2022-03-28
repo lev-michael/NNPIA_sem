@@ -1,5 +1,6 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.movie.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import cz.upce.fei.nnpia.nnpia_sem.app.genre.entity.Genre;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
@@ -35,9 +36,11 @@ public class Movie {
     private Date release_date;
 
     @OneToMany(mappedBy = "id")
+    @JsonIgnoreProperties({"cast_movies", "crew_movies"})
     private Set<Person> actors;
 
     @OneToMany(mappedBy = "id")
+    @JsonIgnoreProperties({"cast_movies", "crew_movies"})
     private Set<Person> crew;
 
     @OneToMany(mappedBy = "movie")
