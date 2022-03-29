@@ -1,9 +1,9 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.genre.entity;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data

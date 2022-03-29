@@ -28,14 +28,21 @@ public class WatchlistService {
     }
 
     public void addMovieToWatchlist(UserIdMovieIdDto userIdMovieIdDto) {
-        Movie movie = movieRepository.getById(userIdMovieIdDto.getMovieId());
-        User user = userRepository.getById(userIdMovieIdDto.getUserId());
+        Movie movie = movieRepository.findById(userIdMovieIdDto.getMovieId()).orElse(null);
+        User user = userRepository.findById(userIdMovieIdDto.getUserId()).orElse(null);
+        if (user == null || movie == null) {
+            return;
+        }
         this.watchlistRepository.save(new Watchlist(movie, user));
     }
 
     public void removeMovieFromWatchlist(UserIdMovieIdDto userIdMovieIdDto) {
-        Movie movie = movieRepository.getById(userIdMovieIdDto.getMovieId());
-        User user = userRepository.getById(userIdMovieIdDto.getUserId());
+        Movie movie = movieRepository.findById(userIdMovieIdDto.getMovieId()).orElse(null);
+        User user = userRepository.findById(userIdMovieIdDto.getUserId()).orElse(null);
+
+        if (user == null || movie == null) {
+            return;
+        }
         this.watchlistRepository.delete(new Watchlist(movie, user));
     }
 }

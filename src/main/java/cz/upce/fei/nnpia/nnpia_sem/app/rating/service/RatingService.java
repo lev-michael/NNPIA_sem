@@ -42,8 +42,12 @@ public class RatingService {
     }
 
     public Rating upsertRating(CreateUpdateRatingDto createUpdateRatingDto) {
-        Movie movie = movieRepository.getById(createUpdateRatingDto.getMovieId());
-        User user = userRepository.getById(createUpdateRatingDto.getUserId());
+        Movie movie = movieRepository.findById(createUpdateRatingDto.getMovieId()).orElse(null);
+        User user = userRepository.findById(createUpdateRatingDto.getUserId()).orElse(null);
+        ;
+        if (user == null || movie == null) {
+            return null;
+        }
         Rating rating = new Rating(createUpdateRatingDto.getScore(), movie, user);
         return ratingRepository.save(rating);
     }

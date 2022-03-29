@@ -1,12 +1,12 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.user.entity;
 
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
@@ -18,7 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     @NotBlank
     private String userName;
 
@@ -29,6 +29,10 @@ public class User {
     @Column
     @NotBlank
     private String lastName;
+
+    @Column
+    @NotBlank
+    private String password;
 
     @Column
     @NotBlank
