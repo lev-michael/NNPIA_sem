@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -18,6 +19,20 @@ public class Person {
     @NotBlank
     @Column
     private String name;
+
+    @Column
+    @NotBlank
+    private String gender;
+
+    @Column
+    @NotBlank
+    private Date birthDate;
+
+    @Column()
+    private String img;
+
+    @Column(length = 1000)
+    private String biography;
 
     @Column
     @JsonIgnoreProperties({"actors", "crew"})
