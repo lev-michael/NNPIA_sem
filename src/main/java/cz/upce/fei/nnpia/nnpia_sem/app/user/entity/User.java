@@ -1,5 +1,6 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -38,6 +39,7 @@ public class User {
     @NotBlank
     private String email;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Rating> ratings;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Rating> ratings;
 }

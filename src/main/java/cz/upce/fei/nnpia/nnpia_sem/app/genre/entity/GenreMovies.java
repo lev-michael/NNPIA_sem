@@ -1,22 +1,23 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.genre.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity(name = "movie_genres")
 @IdClass(ComposedGenreMovieId.class)
 @Data
 public class GenreMovies {
-    @ManyToOne
+
+
+    @ManyToOne()
     @Id
     private Genre genre;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @Id
     private Movie movie;
 }

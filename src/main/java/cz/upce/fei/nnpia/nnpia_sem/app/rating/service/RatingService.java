@@ -43,8 +43,7 @@ public class RatingService {
 
     public Rating upsertRating(CreateUpdateRatingDto createUpdateRatingDto) {
         Movie movie = movieRepository.findById(createUpdateRatingDto.getMovieId()).orElse(null);
-        User user = userRepository.findById(createUpdateRatingDto.getUserId()).orElse(null);
-        ;
+        User user = userRepository.findUserByUserNameEquals(createUpdateRatingDto.getUsername()).orElse(null);
         if (user == null || movie == null) {
             return null;
         }

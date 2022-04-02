@@ -1,7 +1,9 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.person.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
+import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.MovieCast;
+import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.MovieCrew;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,21 +28,21 @@ public class Person {
 
     @Column
     @NotBlank
-    private Date birthDate;
+    private Date birthday;
 
-    @Column()
+    @Column
     private String img;
 
-    @Column(length = 1000)
+    @Column(length = 2500)
     private String biography;
 
+    @JsonManagedReference
     @Column
-    @JsonIgnoreProperties({"actors", "crew"})
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "person", targetEntity = MovieCast.class, fetch = FetchType.LAZY)
     private List<Movie> cast_movies;
 
+    @JsonManagedReference
     @Column
-    @JsonIgnoreProperties({"actors", "crew"})
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "person", targetEntity = MovieCrew.class, fetch = FetchType.LAZY)
     private List<Movie> crew_movies;
 }

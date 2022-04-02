@@ -26,5 +26,4 @@ public class PersonController {
     private Person getPerson(@PathVariable Long id) {
         return personService.getPerson(id);
     }
-
 }

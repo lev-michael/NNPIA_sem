@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/movie")
 public class MovieController {
@@ -25,5 +27,15 @@ public class MovieController {
     @GetMapping("/{id}")
     private Movie findMovie(@PathVariable Long id) {
         return movieService.findMovie(id);
+    }
+
+    @GetMapping("/{id}/actors")
+    private List<Object> findAllActorsByMovie(@PathVariable Long id) {
+        return movieService.findAllActors(id);
+    }
+
+    @GetMapping("/{id}/crew")
+    private List<Object> findAllCrewByMovie(@PathVariable Long id) {
+        return movieService.findAllCrew(id);
     }
 }

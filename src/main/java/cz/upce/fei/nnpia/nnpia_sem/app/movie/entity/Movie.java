@@ -1,7 +1,8 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.movie.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import cz.upce.fei.nnpia.nnpia_sem.app.genre.entity.Genre;
+import cz.upce.fei.nnpia.nnpia_sem.app.genre.entity.GenreMovies;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
 import lombok.Data;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,6 +29,9 @@ public class Movie {
     private String description;
 
     @Column
+    private String img;
+
+    @Column
     @Min(1)
     private int runtime;
 
@@ -35,17 +39,19 @@ public class Movie {
     @NotBlank
     private Date release_date;
 
-    @OneToMany(mappedBy = "id")
-    @JsonIgnoreProperties({"cast_movies", "crew_movies"})
-    private Set<Person> actors;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "movie", targetEntity = MovieCast.class, fetch = FetchType.LAZY)
+    private List<Person> actors;
 
-    @OneToMany(mappedBy = "id")
-    @JsonIgnoreProperties({"cast_movies", "crew_movies"})
-    private Set<Person> crew;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "movie", targetEntity = MovieCrew.class, fetch = FetchType.LAZY)
+    private List<Person> crew;
 
-    @OneToMany(mappedBy = "movie")
-    private Set<Rating> scores;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "movie", targetEntity = Rating.class, fetch = FetchType.LAZY)
+    private List<Rating> scores;
 
-    @OneToMany(mappedBy = "id")
-    private Set<Genre> genres;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "movie", targetEntity = GenreMovies.class, fetch = FetchType.LAZY)
+    private List<Genre> genres;
 }

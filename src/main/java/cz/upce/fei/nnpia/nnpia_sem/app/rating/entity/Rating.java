@@ -1,5 +1,6 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.rating.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
 import cz.upce.fei.nnpia.nnpia_sem.app.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -25,11 +26,13 @@ public class Rating {
     @Max(10)
     private int score;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @Id
     private Movie movie;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @Id
     private User user;
 

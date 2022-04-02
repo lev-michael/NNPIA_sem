@@ -23,9 +23,9 @@ public class RatingController {
         return this.ratingService.getRating(userIdMovieIdDto);
     }
 
-    @GetMapping("/avg")
-    private double findAvgRating(@RequestBody() Long movieId) {
-        return this.ratingService.getAvgRating(movieId);
+    @GetMapping("/{id}")
+    private double findAvgRating(@PathVariable() Long id) {
+        return this.ratingService.getAvgRating(id);
     }
 
     @GetMapping("/top")

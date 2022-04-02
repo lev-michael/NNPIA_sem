@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MovieService {
     @Autowired
@@ -17,6 +19,14 @@ public class MovieService {
     }
 
     public Movie findMovie(Long id) {
-        return movieRepository.findById(id).orElse(null);
+        return movieRepository.getById(id).orElse(null);
+    }
+
+    public List<Object> findAllActors(Long id) {
+        return movieRepository.findAllActorsByMovie(id);
+    }
+
+    public List<Object> findAllCrew(Long id) {
+        return movieRepository.findAllCrewByMovie(id);
     }
 }
