@@ -1,5 +1,6 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.movie.controller;
 
+import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.MovieDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    private Movie findMovie(@PathVariable Long id) {
+    private MovieDto findMovie(@PathVariable Long id) {
         return movieService.findMovie(id);
     }
 

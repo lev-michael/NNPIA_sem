@@ -1,5 +1,6 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.person.controller;
 
+import cz.upce.fei.nnpia.nnpia_sem.app.person.dto.PersonDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    private Person getPerson(@PathVariable Long id) {
+    private PersonDto getPerson(@PathVariable Long id) {
         return personService.getPerson(id);
     }
 }

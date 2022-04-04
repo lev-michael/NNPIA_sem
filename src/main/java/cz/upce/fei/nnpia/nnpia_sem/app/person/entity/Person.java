@@ -38,11 +38,11 @@ public class Person {
 
     @JsonManagedReference
     @Column
-    @OneToMany(mappedBy = "person", targetEntity = MovieCast.class, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "person", targetEntity = MovieCast.class)
     private List<Movie> cast_movies;
 
     @JsonManagedReference
     @Column
-    @OneToMany(mappedBy = "person", targetEntity = MovieCrew.class, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "person", targetEntity = MovieCrew.class)
     private List<Movie> crew_movies;
 }

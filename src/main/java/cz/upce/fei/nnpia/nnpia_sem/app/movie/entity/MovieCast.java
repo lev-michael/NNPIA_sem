@@ -17,11 +17,11 @@ public class MovieCast {
     private Long id;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Movie movie;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Person person;
 
     @Column(name = "character_name", length = 500)
