@@ -19,7 +19,7 @@ import javax.persistence.*;
 public class Watchlist {
 
     @JsonBackReference
-    @ManyToOne(targetEntity = Movie.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Movie.class)
     @Id
     private Movie movie;
 
@@ -28,5 +28,9 @@ public class Watchlist {
     @Id
     private User user;
 
+    @Override
+    public String toString() {
+        return movie.toString() + "";
+    }
 }
 

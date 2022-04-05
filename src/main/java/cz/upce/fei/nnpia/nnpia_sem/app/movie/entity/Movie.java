@@ -1,7 +1,7 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.movie.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import cz.upce.fei.nnpia.nnpia_sem.app.genre.entity.Genre;
 import cz.upce.fei.nnpia.nnpia_sem.app.genre.entity.GenreMovies;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
@@ -39,11 +39,13 @@ public class Movie {
     @NotBlank
     private Date release_date;
 
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "movie", targetEntity = MovieCast.class, fetch = FetchType.LAZY)
     private List<Person> actors;
 
-    @JsonManagedReference
+    // @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "movie", targetEntity = MovieCrew.class, fetch = FetchType.LAZY)
     private List<Person> crew;
 
@@ -53,5 +55,10 @@ public class Movie {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "movie", targetEntity = GenreMovies.class, fetch = FetchType.LAZY)
-    private List<Genre> genres;
+    private List<GenreMovies> genres;
+
+    @Override
+    public String toString() {
+        return id + "";
+    }
 }

@@ -24,8 +24,15 @@ public class UserService {
 
     public UserCredentialsDto getUserCredentials(String username) {
         Optional<User> result = this.userRepository.findUserByUserNameEquals(username);
+        return result.map(user -> new UserCredentialsDto(user.getUserName(), user.getPassword())).orElse(null);
+    }
+
+    public User getUserByUsername(String username) {
+        Optional<User> result = this.userRepository.findUserByUserNameEquals(username);
         if (result.isPresent()) {
-            return new UserCredentialsDto(result.get().getUserName(), result.get().getPassword());
+            User u = result.get();
+            u.setPassword(null);
+            return u;
         }
         return null;
     }

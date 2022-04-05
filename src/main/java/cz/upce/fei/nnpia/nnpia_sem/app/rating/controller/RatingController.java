@@ -18,13 +18,13 @@ public class RatingController {
     @Autowired
     private RatingService ratingService;
 
-    @GetMapping("/")
-    private Rating findRating(@RequestBody() UserIdMovieIdDto userIdMovieIdDto) {
+    @PostMapping("/rating")
+    private Integer findRating(@RequestBody() UserIdMovieIdDto userIdMovieIdDto) {
         return this.ratingService.getRating(userIdMovieIdDto);
     }
 
     @GetMapping("/{id}")
-    private double findAvgRating(@PathVariable() Long id) {
+    private Double findAvgRating(@PathVariable() Long id) {
         return this.ratingService.getAvgRating(id);
     }
 

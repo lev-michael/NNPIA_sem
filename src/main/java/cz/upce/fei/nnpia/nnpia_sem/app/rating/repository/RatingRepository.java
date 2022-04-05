@@ -12,7 +12,7 @@ import java.util.List;
 public interface RatingRepository extends JpaRepository<Rating, ComposedUserMovieId> {
 
     @Query("SELECT AVG(r.score) from Rating r WHERE r.movie.id = ?1")
-    double findAvgRating(Long movieId);
+    Double findAvgRating(Long movieId);
 
     @Query("SELECT r.movie FROM Rating r ORDER BY r.score DESC")
     List<Movie> findBestMovies(Pageable pageable);

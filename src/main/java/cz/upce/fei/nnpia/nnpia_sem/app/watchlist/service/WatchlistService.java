@@ -23,7 +23,7 @@ public class WatchlistService {
     @Autowired
     private MovieRepository movieRepository;
 
-    public List<Movie> getUserWatchlist(Long userId) {
+    public List<Long> getUserWatchlist(Long userId) {
         return watchlistRepository.findAllByUser_Id(userId);
     }
 

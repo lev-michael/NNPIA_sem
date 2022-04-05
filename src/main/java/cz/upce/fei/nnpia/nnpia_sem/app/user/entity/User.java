@@ -2,6 +2,7 @@ package cz.upce.fei.nnpia.nnpia_sem.app.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
+import cz.upce.fei.nnpia.nnpia_sem.app.watchlist.entity.Watchlist;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,4 +43,8 @@ public class User {
     @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Rating> ratings;
+
+    //@JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Watchlist> watchlist;
 }

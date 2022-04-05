@@ -5,6 +5,5 @@ import lombok.Data;
 @Data
 public class CreateUpdateRatingDto {
     int score;
-    Long movieId;
-    String username;
+    Long movieId, userId;
 }

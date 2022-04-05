@@ -32,18 +32,15 @@ public class RatingService {
         this.ratingRepository.deleteById(id);
     }
 
-    public Rating getRating(UserIdMovieIdDto userIdMovieIdDto) {
+    public Integer getRating(UserIdMovieIdDto userIdMovieIdDto) {
         ComposedUserMovieId id = new ComposedUserMovieId(userIdMovieIdDto.getMovieId(), userIdMovieIdDto.getUserId());
         Optional<Rating> result = ratingRepository.findById(id);
-        if (result.isPresent()) {
-            return result.get();
-        }
-        throw new RuntimeException("Rating not found");
+        return result.map(Rating::getScore).orElse(0);
     }
 
     public Rating upsertRating(CreateUpdateRatingDto createUpdateRatingDto) {
         Movie movie = movieRepository.findById(createUpdateRatingDto.getMovieId()).orElse(null);
-        User user = userRepository.findUserByUserNameEquals(createUpdateRatingDto.getUsername()).orElse(null);
+        User user = userRepository.findById(createUpdateRatingDto.getUserId()).orElse(null);
         if (user == null || movie == null) {
             return null;
         }
@@ -52,7 +49,11 @@ public class RatingService {
     }
 
     public double getAvgRating(Long movieId) {
-        return ratingRepository.findAvgRating(movieId);
+        Double rating = ratingRepository.findAvgRating(movieId);
+        if (rating == null) {
+            return 0;
+        }
+        return rating;
     }
 
     public List<Movie> getBestMovies() {
