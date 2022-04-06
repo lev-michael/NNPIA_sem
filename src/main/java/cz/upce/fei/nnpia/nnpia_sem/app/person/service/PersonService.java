@@ -36,7 +36,7 @@ public class PersonService {
             List<PersonMovieDto> crew_movies = new ArrayList<>();
             person.getCast_movies().forEach(m -> cast_movies.add(new PersonMovieDto(m.getMovie().getId(), m.getMovie().getTitle(), m.getMovie().getImg(), m.getMovie().getRelease_date(), m.getCharacter())));
             person.getCrew_movies().forEach(m -> crew_movies.add(new PersonMovieDto(m.getMovie().getId(), m.getMovie().getTitle(), m.getMovie().getImg(), m.getMovie().getRelease_date(), m.getRole())));
-            return new PersonDetailDto(person.getId(), person.getName(), person.getGender(), person.getBirthday(), person.getImg(), person.getBiography(), cast_movies, crew_movies);
+            return new PersonDetailDto(person.getId(), person.getName(), person.getGender(), person.getBirthday(), person.getImg(), person.getBiography(), crew_movies, cast_movies);
         }
         return null;
     }
