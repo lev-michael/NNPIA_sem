@@ -1,7 +1,6 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.person.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.MovieCast;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.MovieCrew;
 import lombok.Data;
@@ -39,10 +38,10 @@ public class Person {
     @JsonManagedReference
     @Column
     @OneToMany(mappedBy = "person", targetEntity = MovieCast.class, fetch = FetchType.LAZY)
-    private List<Movie> cast_movies;
+    private List<MovieCast> cast_movies;
 
     @JsonManagedReference
     @Column
     @OneToMany(mappedBy = "person", targetEntity = MovieCrew.class, fetch = FetchType.LAZY)
-    private List<Movie> crew_movies;
+    private List<MovieCrew> crew_movies;
 }
