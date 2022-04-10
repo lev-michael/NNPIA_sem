@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/person")
+@CrossOrigin
 public class PersonController {
 
     @Autowired

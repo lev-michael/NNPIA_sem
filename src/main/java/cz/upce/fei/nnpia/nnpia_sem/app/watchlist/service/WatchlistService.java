@@ -8,6 +8,8 @@ import cz.upce.fei.nnpia.nnpia_sem.app.watchlist.dto.UserIdMovieIdDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.watchlist.entity.Watchlist;
 import cz.upce.fei.nnpia.nnpia_sem.app.watchlist.repository.WatchlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +25,8 @@ public class WatchlistService {
     @Autowired
     private MovieRepository movieRepository;
 
-    public List<Long> getUserWatchlist(Long userId) {
-        return watchlistRepository.findAllByUser_Id(userId);
+    public List<Long> getUserMoviesIdsOnWatchlist(Long userId) {
+        return watchlistRepository.findAllIdsByUser_Id(userId);
     }
 
     public void addMovieToWatchlist(UserIdMovieIdDto userIdMovieIdDto) {
@@ -44,5 +46,9 @@ public class WatchlistService {
             return;
         }
         this.watchlistRepository.delete(new Watchlist(movie, user));
+    }
+
+    public Page<Movie> getUserMoviesOnWatchlist(Long userId, Pageable pageable, String query) {
+        return watchlistRepository.findAllMoviesByUser_Id(userId, pageable, query);
     }
 }

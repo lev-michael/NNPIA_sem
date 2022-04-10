@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/rating")
+@CrossOrigin
 public class RatingController {
 
     @Autowired
