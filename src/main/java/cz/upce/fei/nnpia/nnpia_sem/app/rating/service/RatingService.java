@@ -3,14 +3,18 @@ package cz.upce.fei.nnpia.nnpia_sem.app.rating.service;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.repository.MovieRepository;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.dto.CreateUpdateRatingDto;
+import cz.upce.fei.nnpia.nnpia_sem.app.rating.dto.MovieWithScoreDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.ComposedUserMovieId;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.repository.RatingRepository;
 import cz.upce.fei.nnpia.nnpia_sem.app.user.entity.User;
 import cz.upce.fei.nnpia.nnpia_sem.app.user.repository.UserRepository;
+import cz.upce.fei.nnpia.nnpia_sem.app.watchlist.dto.SearchWithUserIdDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.watchlist.dto.UserIdMovieIdDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,5 +62,9 @@ public class RatingService {
 
     public List<Movie> getBestMovies() {
         return ratingRepository.findBestMovies(PageRequest.of(0, 10));
+    }
+
+    public Page<MovieWithScoreDto> getUserRating(SearchWithUserIdDto userIdDto, Pageable pageable) {
+        return ratingRepository.findAllByUserId(userIdDto.getUserId(), userIdDto.getQuery(), pageable);
     }
 }

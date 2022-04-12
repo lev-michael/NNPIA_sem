@@ -1,10 +1,9 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.movie.service;
 
-import cz.upce.fei.nnpia.nnpia_sem.app.genre.entity.GenreMovies;
-import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.ActorDto;
-import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.CrewDto;
-import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.MovieDto;
-import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.MovieListDto;
+import cz.upce.fei.nnpia.nnpia_sem.app.genre.repository.entity.Genre;
+import cz.upce.fei.nnpia.nnpia_sem.app.genre.repository.entity.GenreMovies;
+import cz.upce.fei.nnpia.nnpia_sem.app.genre.service.GenreService;
+import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.*;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.repository.MovieRepository;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.service.RatingService;
@@ -24,6 +23,9 @@ public class MovieService {
 
     @Autowired
     private RatingService ratingService;
+
+    @Autowired
+    private GenreService genreService;
 
     public Page<Movie> findAllMovies(Pageable pageable) {
         return movieRepository.findAll(pageable);
@@ -60,5 +62,20 @@ public class MovieService {
 
     public Page<MovieListDto> searchAllMovies(Pageable pageable, String search) {
         return movieRepository.searchAll(search, pageable);
+    }
+
+    public Movie addMovie(AddMovieDto movieDto) {
+        Movie movie = new Movie();
+        movie.setTitle(movieDto.getTitle());
+        movie.setDescription(movieDto.getDescription());
+        movie.setImg(movieDto.getImg());
+        movie.setRelease_date(movieDto.getRelease_date());
+        movie.setRuntime(movieDto.getRuntime());
+        Movie savedMovie = movieRepository.save(movie);
+        for (String id : movieDto.getGenres()) {
+            Genre genre = genreService.getGenre(Long.parseLong(id));
+            genreService.addGenreToMovie(genre, savedMovie);
+        }
+        return savedMovie;
     }
 }

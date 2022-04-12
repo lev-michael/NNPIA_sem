@@ -1,4 +1,4 @@
-package cz.upce.fei.nnpia.nnpia_sem.app.genre.entity;
+package cz.upce.fei.nnpia.nnpia_sem.app.genre.repository.entity;
 
 import lombok.Data;
 

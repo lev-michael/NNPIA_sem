@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public interface MovieRepository extends JpaRepository<Movie, Long>, QueryByExampleExecutor<Movie> {
 
-    @Query("select m from Movie m join fetch m.actors where m.id = :id")
+    @Query("select m from Movie m where m.id = :id")
     Optional<Movie> getById(Long id);
 
     @Query("SELECT cast.person.id as id, cast.character as role, cast.person.name as name, cast.person.img as img from movie_cast cast WHERE cast.movie.id = :id ORDER BY cast.order")
