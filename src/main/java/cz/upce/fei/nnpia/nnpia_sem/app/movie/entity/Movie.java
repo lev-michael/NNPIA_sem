@@ -24,7 +24,7 @@ public class Movie {
     @NotBlank
     private String title;
 
-    @Column(length = 2500)
+    @Column(length = 5000)
     @NotBlank()
     private String description;
 
@@ -38,12 +38,12 @@ public class Movie {
     @Column
     private Date release_date;
 
-    //@JsonManagedReference
+    @JsonManagedReference
     @JsonIgnore
     @OneToMany(mappedBy = "movie", targetEntity = MovieCast.class, fetch = FetchType.LAZY)
     private List<Person> actors;
 
-    // @JsonManagedReference
+    @JsonManagedReference
     @JsonIgnore
     @OneToMany(mappedBy = "movie", targetEntity = MovieCrew.class, fetch = FetchType.LAZY)
     private List<Person> crew;

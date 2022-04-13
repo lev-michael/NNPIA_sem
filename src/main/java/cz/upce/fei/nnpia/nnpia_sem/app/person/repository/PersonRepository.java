@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
-    @Query("SELECT distinct(p.id) as id, p.img as img, p.name as name " +
+    @Query("SELECT distinct(p.id) as id, p.img as img, p.name as name, p.birthday as birthday " +
             "from Person p " +
             "JOIN movie_cast c On p.id = c.person.id " +
             "group by p.id, p.name " +

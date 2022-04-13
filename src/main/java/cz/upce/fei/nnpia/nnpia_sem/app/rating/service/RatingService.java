@@ -1,5 +1,6 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.rating.service;
 
+import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.MovieListDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.repository.MovieRepository;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.dto.CreateUpdateRatingDto;
@@ -60,8 +61,12 @@ public class RatingService {
         return rating;
     }
 
-    public List<Movie> getBestMovies() {
+    public List<MovieListDto> getBestMovies() {
         return ratingRepository.findBestMovies(PageRequest.of(0, 10));
+    }
+
+    public List<MovieListDto> getWorstMovies() {
+        return ratingRepository.findWorstMovies(PageRequest.of(0, 10));
     }
 
     public Page<MovieWithScoreDto> getUserRating(SearchWithUserIdDto userIdDto, Pageable pageable) {

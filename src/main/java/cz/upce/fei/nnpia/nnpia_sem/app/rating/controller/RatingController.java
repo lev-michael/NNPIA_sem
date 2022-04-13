@@ -1,6 +1,6 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.rating.controller;
 
-import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
+import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.MovieListDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.dto.CreateUpdateRatingDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.dto.MovieWithScoreDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
@@ -38,9 +38,14 @@ public class RatingController {
         return this.ratingService.getAvgRating(id);
     }
 
-    @GetMapping("/top")
-    private List<Movie> findTopRatings() {
+    @GetMapping("/best")
+    private List<MovieListDto> findBestRatings() {
         return this.ratingService.getBestMovies();
+    }
+
+    @GetMapping("/worst")
+    private List<MovieListDto> findWorstRatings() {
+        return this.ratingService.getWorstMovies();
     }
 
     @PostMapping("/delete")

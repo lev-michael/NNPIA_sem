@@ -25,7 +25,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long>, QueryByExam
     List<CrewDto> findAllCrewByMovie(Long id);
 
     //@Query(value = "Select * from Movie where title like %?1% or description like %?1%", nativeQuery = true)
-    @Query("SELECT m.id as id, m.img as img, m.title as title, AVG(r.score) as avgScore " +
+    @Query("SELECT m.id as id, m.img as img, m.title as title, m.release_date as release_date, AVG(r.score) as avgScore " +
             "from Movie m " +
             "LEFT OUTER JOIN Rating r On m.id = r.movie.id " +
             "group by m.id, m.title " +

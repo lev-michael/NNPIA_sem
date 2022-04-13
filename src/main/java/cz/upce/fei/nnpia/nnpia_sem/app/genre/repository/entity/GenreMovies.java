@@ -15,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class GenreMovies {
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @Id
     private Genre genre;
