@@ -67,4 +67,9 @@ public class RatingController {
         Rating rating = this.ratingService.upsertRating(createUpdateRatingDto);
         return new ApiResponse<>(HttpStatus.OK.value(), rating != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, rating);
     }
+
+    @ExceptionHandler({Exception.class})
+    public StausEnum handleException() {
+        return StausEnum.NOT_FOUND;
+    }
 }

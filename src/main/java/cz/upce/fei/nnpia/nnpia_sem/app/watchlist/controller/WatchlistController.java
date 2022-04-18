@@ -46,4 +46,8 @@ public class WatchlistController {
         return new ApiResponse<>(HttpStatus.OK.value(), removed ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, removed);
     }
 
+    @ExceptionHandler({Exception.class})
+    public StausEnum handleException() {
+        return StausEnum.NOT_FOUND;
+    }
 }

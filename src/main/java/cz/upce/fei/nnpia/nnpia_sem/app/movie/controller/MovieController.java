@@ -21,6 +21,10 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+    @ExceptionHandler({Exception.class})
+    public StausEnum handleException() {
+        return StausEnum.NOT_FOUND;
+    }
 
     @PostMapping("/list")
     public ApiResponse<Page<MovieListDto>> searchAllMovies(@RequestBody(required = false) SearchDto searchDto, Pageable pageable) {

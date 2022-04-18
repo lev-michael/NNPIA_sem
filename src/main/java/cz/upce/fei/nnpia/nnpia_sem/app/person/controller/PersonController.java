@@ -57,4 +57,9 @@ public class PersonController {
         Long id = personService.editPerson(editPersonDto);
         return new ApiResponse<>(HttpStatus.OK.value(), id != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, id);
     }
+
+    @ExceptionHandler({Exception.class})
+    public StausEnum handleException() {
+        return StausEnum.NOT_FOUND;
+    }
 }
