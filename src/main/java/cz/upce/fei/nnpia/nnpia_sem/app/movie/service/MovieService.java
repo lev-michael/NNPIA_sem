@@ -122,8 +122,8 @@ public class MovieService {
         return null;
     }
 
-    public List<MovieIdTitleDto> findAllMoviesIds() {
-        return movieRepository.findAllIds();
+    public List<MovieIdTitleDto> findAllMoviesIdsTitles() {
+        return movieRepository.findAllIdsTitles();
     }
 
     public Long editMovie(EditMovieDto movieDto) {

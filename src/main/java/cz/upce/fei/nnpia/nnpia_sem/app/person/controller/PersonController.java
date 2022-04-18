@@ -23,37 +23,37 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping("/list")
-    private ApiResponse<Page<Person>> getAllPersons(Pageable pageable) {
+    public ApiResponse<Page<Person>> getAllPersons(Pageable pageable) {
         Page<Person> allPersons = personService.getAllPersons(pageable);
         return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, allPersons);
     }
 
     @GetMapping("/ids")
-    private ApiResponse<List<PersonIdNameDto>> getAllPersonsNamesAndIds() {
+    public ApiResponse<List<PersonIdNameDto>> getAllPersonsNamesAndIds() {
         List<PersonIdNameDto> allPersonsNamesAndIds = personService.getAllPersonsNamesAndIds();
         return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, allPersonsNamesAndIds);
     }
 
     @GetMapping("/{id}")
-    private ApiResponse<PersonDetailDto> getPerson(@PathVariable Long id) {
+    public ApiResponse<PersonDetailDto> getPerson(@PathVariable Long id) {
         PersonDetailDto person = personService.getPerson(id);
         return new ApiResponse<>(HttpStatus.OK.value(), person != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, person);
     }
 
     @PostMapping("/actors/list")
-    private ApiResponse<Page<PersonListItemDto>> searchAllActors(@RequestBody(required = false) SearchDto searchDto, Pageable pageable) {
+    public ApiResponse<Page<PersonListItemDto>> searchAllActors(@RequestBody(required = false) SearchDto searchDto, Pageable pageable) {
         Page<PersonListItemDto> personListItemDtos = personService.searchAllActors(pageable, searchDto.getQuery());
         return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, personListItemDtos);
     }
 
     @PostMapping("/add")
-    private ApiResponse<Long> addPerson(@RequestBody AddPersonDto addPersonDto) {
+    public ApiResponse<Long> addPerson(@RequestBody AddPersonDto addPersonDto) {
         Long id = personService.addPerson(addPersonDto);
         return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.CREATED, id);
     }
 
     @PostMapping("/edit")
-    private ApiResponse<Long> editPerson(@RequestBody EditPersonDto editPersonDto) {
+    public ApiResponse<Long> editPerson(@RequestBody EditPersonDto editPersonDto) {
         Long id = personService.editPerson(editPersonDto);
         return new ApiResponse<>(HttpStatus.OK.value(), id != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, id);
     }

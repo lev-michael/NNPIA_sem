@@ -22,7 +22,7 @@ public class GenreController {
     private GenreService genreService;
 
     @GetMapping("/list")
-    private ApiResponse<List<Genre>> findAllGenres() {
+    public ApiResponse<List<Genre>> findAllGenres() {
         return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, genreService.getAllGenres());
     }
 

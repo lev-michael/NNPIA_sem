@@ -43,5 +43,5 @@ public interface MovieRepository extends JpaRepository<Movie, Long>, QueryByExam
     Page<RandomMovieDto> findRandom(Pageable pageable);
 
     @Query("Select m.id as id, m.title as title from Movie m")
-    List<MovieIdTitleDto> findAllIds();
+    List<MovieIdTitleDto> findAllIdsTitles();
 }
