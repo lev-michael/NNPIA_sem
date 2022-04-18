@@ -8,8 +8,6 @@ import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -21,18 +19,15 @@ public class Movie {
     private Long id;
 
     @Column
-    @NotBlank
     private String title;
 
     @Column(length = 5000)
-    @NotBlank()
     private String description;
 
     @Column
     private String img;
 
     @Column
-    @Min(1)
     private int runtime;
 
     @Column

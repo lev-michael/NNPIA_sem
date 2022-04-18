@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 
@@ -28,7 +27,7 @@ public class RatingController {
     private RatingService ratingService;
 
     @PostMapping("/rating")
-    public ApiResponse<Integer> findRating(@Valid @RequestBody() UserIdMovieIdDto userIdMovieIdDto) {
+    public ApiResponse<Integer> findRating(@RequestBody() UserIdMovieIdDto userIdMovieIdDto) {
         Integer rating = ratingService.getRating(userIdMovieIdDto);
         return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, rating);
     }

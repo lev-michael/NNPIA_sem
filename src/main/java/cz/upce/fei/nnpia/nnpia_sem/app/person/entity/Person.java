@@ -6,7 +6,6 @@ import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.MovieCrew;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -17,12 +16,10 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Column
     private String name;
 
     @Column
-    @NotBlank
     private String gender;
 
     @Column

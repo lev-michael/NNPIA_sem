@@ -5,7 +5,6 @@ import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity(name = "movie_crew")
 @Data
@@ -24,7 +23,6 @@ public class MovieCrew {
     private Person person;
 
     @Column
-    @NotBlank
     private String role;
 
 }

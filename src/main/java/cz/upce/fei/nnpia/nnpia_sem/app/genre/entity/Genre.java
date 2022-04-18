@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -17,7 +16,6 @@ public class Genre {
     private Long id;
 
     @Column
-    @NotBlank
     private String name;
 
 }

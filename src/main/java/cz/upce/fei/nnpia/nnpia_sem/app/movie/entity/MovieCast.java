@@ -5,8 +5,6 @@ import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 
 @Entity(name = "movie_cast")
 @Data
@@ -25,11 +23,9 @@ public class MovieCast {
     private Person person;
 
     @Column(name = "character_name", length = 500)
-    @NotBlank
     private String character;
 
     @Column(name = "cast_order")
-    @Min(0)
     private int order;
 
 }
