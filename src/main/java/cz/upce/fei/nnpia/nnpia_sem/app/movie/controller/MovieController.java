@@ -50,10 +50,22 @@ public class MovieController {
         return new ApiResponse<>(HttpStatus.OK.value(), id != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, id);
     }
 
+    @PostMapping("/cast/remove")
+    public ApiResponse<Boolean> removeMovieCast(@RequestBody AddMovieCastDto addMovieCastDto) {
+        Boolean deleted = movieService.removeMovieCast(addMovieCastDto);
+        return new ApiResponse<>(HttpStatus.OK.value(), deleted ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, deleted);
+    }
+
     @PostMapping("/crew/add")
     public ApiResponse<Long> addMovieCast(@RequestBody AddMovieCrewDto addMovieCrewDto) {
         Long id = movieService.addMovieCrew(addMovieCrewDto);
         return new ApiResponse<>(HttpStatus.OK.value(), id != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, id);
+    }
+
+    @PostMapping("/crew/remove")
+    public ApiResponse<Boolean> removeMovieCast(@RequestBody AddMovieCrewDto addMovieCrewDto) {
+        Boolean removed = movieService.removeMovieCrew(addMovieCrewDto);
+        return new ApiResponse<>(HttpStatus.OK.value(), removed ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, removed);
     }
 
     @GetMapping("/{id}")

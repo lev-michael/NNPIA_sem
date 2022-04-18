@@ -89,7 +89,7 @@ public class MovieService {
     }
 
     public RandomMovieDto findRandomMovie() {
-        Long count = movieRepository.count();
+        long count = movieRepository.count();
         int index = (int) (Math.random() * count);
         Page<RandomMovieDto> movieDto = movieRepository.findRandom(PageRequest.of(index, 1));
         return movieDto.getContent().get(0);
@@ -147,5 +147,23 @@ public class MovieService {
             return savedMovie.getId();
         }
         return null;
+    }
+
+    public Boolean removeMovieCast(AddMovieCastDto addMovieCastDto) {
+        MovieCast movieCast = movieCastRepository.findByMovie_idAndPerson_id(addMovieCastDto.getMovie_id(), addMovieCastDto.getPerson_id());
+        if (movieCast != null) {
+            movieCastRepository.delete(movieCast);
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean removeMovieCrew(AddMovieCrewDto addMovieCastDto) {
+        MovieCrew movieCrew = movieCrewRepository.findByMovie_idAndPerson_id(addMovieCastDto.getMovie_id(), addMovieCastDto.getPerson_id());
+        if (movieCrew != null) {
+            movieCrewRepository.delete(movieCrew);
+            return true;
+        }
+        return false;
     }
 }
