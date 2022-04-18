@@ -18,17 +18,17 @@ public interface RatingRepository extends JpaRepository<Rating, ComposedUserMovi
 
     @Query("SELECT r.movie.title as title, r.movie.release_date as release_date, r.movie.img as img, r.movie.id as id, AVG(r.score) as avgScore " +
             "FROM Rating r " +
-            "GROUP BY r.movie.id " +
+            "GROUP BY id, title, release_date, img " +
             "ORDER BY avgScore DESC")
     List<MovieListDto> findBestMovies(Pageable pageable);
 
     @Query("SELECT r.movie.title as title, r.movie.release_date as release_date, r.movie.img as img, r.movie.id as id, AVG(r.score) as avgScore " +
             "FROM Rating r " +
-            "GROUP BY r.movie.id " +
+            "GROUP BY id, title, release_date, img " +
             "ORDER BY avgScore ASC")
     List<MovieListDto> findWorstMovies(Pageable pageable);
 
     @Query("SELECT r.movie.id as id,r.movie.title as title, r.movie.img as img, r.movie.description as description, r.movie.runtime as runtime,r.movie.release_date as release_date , r.score as score " +
-            "FROM Rating r Where r.user.id = ?1 AND r.movie.title like %?2%")
+            "FROM Rating r Where r.user.id = ?1 AND lower(r.movie.title) like %?2%")
     Page<MovieWithScoreDto> findAllByUserId(Long userId, String query, Pageable pageable);
 }

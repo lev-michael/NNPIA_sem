@@ -1,4 +1,4 @@
-package cz.upce.fei.nnpia.nnpia_sem.app.genre.repository.entity;
+package cz.upce.fei.nnpia.nnpia_sem.app.genre.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;

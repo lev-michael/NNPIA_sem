@@ -1,11 +1,14 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.movie.controller;
 
+import cz.upce.fei.nnpia.nnpia_sem.app.config.ApiResponse;
+import cz.upce.fei.nnpia.nnpia_sem.app.config.StausEnum;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.*;
-import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
+import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.RandomMovieDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,27 +23,63 @@ public class MovieController {
 
 
     @PostMapping("/list")
-    private Page<MovieListDto> searchAllMovies(@RequestBody(required = false) SearchDto searchDto, Pageable pageable) {
-        return movieService.searchAllMovies(pageable, searchDto == null ? "" : searchDto.getQuery());
+    private ApiResponse<Page<MovieListDto>> searchAllMovies(@RequestBody(required = false) SearchDto searchDto, Pageable pageable) {
+        Page<MovieListDto> movieList = movieService.searchAllMovies(pageable, searchDto == null ? "" : searchDto.getQuery());
+        return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, movieList);
     }
 
     @PostMapping("/add")
-    private Movie addMovie(@RequestBody AddMovieDto movieDto) {
-        return movieService.addMovie(movieDto);
+    private ApiResponse<Long> addMovie(@RequestBody AddMovieDto movieDto) {
+        Long movieId = movieService.addMovie(movieDto);
+        return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.CREATED, movieId);
+    }
+
+    @PostMapping("/edit")
+    private ApiResponse<Long> addMovie(@RequestBody EditMovieDto movieDto) {
+        Long movieId = movieService.editMovie(movieDto);
+        return new ApiResponse<>(HttpStatus.OK.value(), movieId != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, movieId);
+    }
+
+    @PostMapping("/cast/add")
+    private ApiResponse<Long> addMovieCast(@RequestBody AddMovieCastDto addMovieCastDto) {
+        Long id = movieService.addMovieCast(addMovieCastDto);
+        return new ApiResponse<>(HttpStatus.OK.value(), id != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, id);
+    }
+
+    @PostMapping("/crew/add")
+    private ApiResponse<Long> addMovieCast(@RequestBody AddMovieCrewDto addMovieCrewDto) {
+        Long id = movieService.addMovieCrew(addMovieCrewDto);
+        return new ApiResponse<>(HttpStatus.OK.value(), id != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, id);
     }
 
     @GetMapping("/{id}")
-    private MovieDto findMovie(@PathVariable Long id) {
-        return movieService.findMovie(id);
+    private ApiResponse<MovieDto> findMovie(@PathVariable Long id) {
+        MovieDto movie = movieService.findMovie(id);
+        return new ApiResponse<>(HttpStatus.OK.value(), movie != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, movie);
     }
 
     @GetMapping("/{id}/actors")
-    private List<ActorDto> findAllActorsByMovie(@PathVariable Long id) {
-        return movieService.findAllActors(id);
+    private ApiResponse<List<ActorDto>> findAllActorsByMovie(@PathVariable Long id) {
+        List<ActorDto> allActors = movieService.findAllActors(id);
+        return new ApiResponse<>(HttpStatus.OK.value(), allActors != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, allActors);
     }
 
     @GetMapping("/{id}/crew")
-    private List<CrewDto> findAllCrewByMovie(@PathVariable Long id) {
-        return movieService.findAllCrew(id);
+    private ApiResponse<List<CrewDto>> findAllCrewByMovie(@PathVariable Long id) {
+        List<CrewDto> allCrew = movieService.findAllCrew(id);
+        return new ApiResponse<>(HttpStatus.OK.value(), allCrew != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, allCrew);
     }
+
+    @GetMapping("/ids")
+    private ApiResponse<List<MovieIdTitleDto>> findAllMovieIds() {
+        List<MovieIdTitleDto> allMoviesIds = movieService.findAllMoviesIds();
+        return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, allMoviesIds);
+    }
+
+    @GetMapping("/random")
+    private ApiResponse<RandomMovieDto> findRandomMovie() {
+        RandomMovieDto randomMovie = movieService.findRandomMovie();
+        return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, randomMovie);
+    }
+
 }

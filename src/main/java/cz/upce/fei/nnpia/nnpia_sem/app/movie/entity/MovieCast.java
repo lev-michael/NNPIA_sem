@@ -29,7 +29,6 @@ public class MovieCast {
     private String character;
 
     @Column(name = "cast_order")
-    @NotBlank
     @Min(0)
     private int order;
 

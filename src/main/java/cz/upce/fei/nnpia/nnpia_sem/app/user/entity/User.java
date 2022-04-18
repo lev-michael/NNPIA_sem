@@ -40,6 +40,10 @@ public class User {
     @NotBlank
     private String email;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Roles role;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Rating> ratings;

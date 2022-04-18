@@ -2,7 +2,7 @@ package cz.upce.fei.nnpia.nnpia_sem.app.movie.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import cz.upce.fei.nnpia.nnpia_sem.app.genre.repository.entity.GenreMovies;
+import cz.upce.fei.nnpia.nnpia_sem.app.genre.entity.GenreMovies;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import cz.upce.fei.nnpia.nnpia_sem.app.rating.entity.Rating;
 import lombok.Data;
@@ -55,9 +55,4 @@ public class Movie {
     @JsonManagedReference
     @OneToMany(mappedBy = "movie", targetEntity = GenreMovies.class, fetch = FetchType.LAZY)
     private List<GenreMovies> genres;
-
-    @Override
-    public String toString() {
-        return id + "";
-    }
 }

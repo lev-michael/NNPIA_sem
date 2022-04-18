@@ -1,9 +1,6 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.person.service;
 
-import cz.upce.fei.nnpia.nnpia_sem.app.movie.service.MovieService;
-import cz.upce.fei.nnpia.nnpia_sem.app.person.dto.PersonDetailDto;
-import cz.upce.fei.nnpia.nnpia_sem.app.person.dto.PersonListItemDto;
-import cz.upce.fei.nnpia.nnpia_sem.app.person.dto.PersonMovieDto;
+import cz.upce.fei.nnpia.nnpia_sem.app.person.dto.*;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +17,6 @@ public class PersonService {
 
     @Autowired
     private PersonRepository personRepository;
-
-    @Autowired
-    private MovieService movieService;
 
     public Page<Person> getAllPersons(Pageable pageable) {
         return personRepository.findAll(pageable);
@@ -42,6 +36,38 @@ public class PersonService {
     }
 
     public Page<PersonListItemDto> searchAllActors(Pageable pageable, String text) {
-        return personRepository.searchAllActors(pageable, text);
+        return personRepository.searchAllActors(pageable, text.toLowerCase());
+    }
+
+    public List<PersonIdNameDto> getAllPersonsNamesAndIds() {
+        return personRepository.getAllPersonsNamesAndIds();
+    }
+
+    public Person findPerson(Long id) {
+        return personRepository.findById(id).orElse(null);
+    }
+
+    public Long addPerson(AddPersonDto addPersonDto) {
+        Person p = new Person();
+        p.setBiography(addPersonDto.getBiography());
+        p.setName(addPersonDto.getName());
+        p.setBirthday(addPersonDto.getBirthday());
+        p.setGender(addPersonDto.getGender());
+        p.setImg(addPersonDto.getImg());
+        return personRepository.save(p).getId();
+    }
+
+    public Long editPerson(EditPersonDto editPersonDto) {
+        Optional<Person> p = personRepository.getById(editPersonDto.getId());
+        if (p.isPresent()) {
+            Person person = p.get();
+            person.setBiography(editPersonDto.getBiography());
+            person.setName(editPersonDto.getName());
+            person.setBirthday(editPersonDto.getBirthday());
+            person.setGender(editPersonDto.getGender());
+            person.setImg(editPersonDto.getImg());
+            return personRepository.save(person).getId();
+        }
+        return null;
     }
 }

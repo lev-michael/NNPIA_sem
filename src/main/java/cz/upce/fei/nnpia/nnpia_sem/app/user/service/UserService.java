@@ -6,7 +6,6 @@ import cz.upce.fei.nnpia.nnpia_sem.app.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,10 +15,6 @@ public class UserService {
 
     public User getUser(Long id) {
         return this.userRepository.findById(id).orElse(null);
-    }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
     }
 
     public UserCredentialsDto getUserCredentials(String username) {

@@ -15,7 +15,7 @@ public interface WatchlistRepository extends JpaRepository<Watchlist, ComposedUs
     @Query("SELECT w.movie.id FROM Watchlist w WHERE w.user.id = ?1")
     List<Long> findAllIdsByUser_Id(Long user);
 
-    @Query("SELECT w.movie FROM Watchlist w WHERE w.user.id = ?1 AND w.movie.title like %?2%")
+    @Query("SELECT w.movie FROM Watchlist w WHERE w.user.id = ?1 AND lower(w.movie.title) like %?2%")
     Page<Movie> findAllMoviesByUser_Id(Long user, Pageable pageable, String query);
 
 }

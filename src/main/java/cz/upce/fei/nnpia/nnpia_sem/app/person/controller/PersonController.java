@@ -1,14 +1,18 @@
 package cz.upce.fei.nnpia.nnpia_sem.app.person.controller;
 
+import cz.upce.fei.nnpia.nnpia_sem.app.config.ApiResponse;
+import cz.upce.fei.nnpia.nnpia_sem.app.config.StausEnum;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.SearchDto;
-import cz.upce.fei.nnpia.nnpia_sem.app.person.dto.PersonDetailDto;
-import cz.upce.fei.nnpia.nnpia_sem.app.person.dto.PersonListItemDto;
+import cz.upce.fei.nnpia.nnpia_sem.app.person.dto.*;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/person")
@@ -19,17 +23,38 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping("/list")
-    private Page<Person> getAllPersons(Pageable pageable) {
-        return personService.getAllPersons(pageable);
+    private ApiResponse<Page<Person>> getAllPersons(Pageable pageable) {
+        Page<Person> allPersons = personService.getAllPersons(pageable);
+        return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, allPersons);
+    }
+
+    @GetMapping("/ids")
+    private ApiResponse<List<PersonIdNameDto>> getAllPersonsNamesAndIds() {
+        List<PersonIdNameDto> allPersonsNamesAndIds = personService.getAllPersonsNamesAndIds();
+        return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, allPersonsNamesAndIds);
     }
 
     @GetMapping("/{id}")
-    private PersonDetailDto getPerson(@PathVariable Long id) {
-        return personService.getPerson(id);
+    private ApiResponse<PersonDetailDto> getPerson(@PathVariable Long id) {
+        PersonDetailDto person = personService.getPerson(id);
+        return new ApiResponse<>(HttpStatus.OK.value(), person != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, person);
     }
 
     @PostMapping("/actors/list")
-    private Page<PersonListItemDto> searchAllActors(@RequestBody(required = false) SearchDto searchDto, Pageable pageable) {
-        return personService.searchAllActors(pageable, searchDto == null ? "" : searchDto.getQuery());
+    private ApiResponse<Page<PersonListItemDto>> searchAllActors(@RequestBody(required = false) SearchDto searchDto, Pageable pageable) {
+        Page<PersonListItemDto> personListItemDtos = personService.searchAllActors(pageable, searchDto.getQuery());
+        return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, personListItemDtos);
+    }
+
+    @PostMapping("/add")
+    private ApiResponse<Long> addPerson(@RequestBody AddPersonDto addPersonDto) {
+        Long id = personService.addPerson(addPersonDto);
+        return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.CREATED, id);
+    }
+
+    @PostMapping("/edit")
+    private ApiResponse<Long> editPerson(@RequestBody EditPersonDto editPersonDto) {
+        Long id = personService.editPerson(editPersonDto);
+        return new ApiResponse<>(HttpStatus.OK.value(), id != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, id);
     }
 }

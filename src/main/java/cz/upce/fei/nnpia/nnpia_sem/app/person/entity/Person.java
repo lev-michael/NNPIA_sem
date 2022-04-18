@@ -26,7 +26,6 @@ public class Person {
     private String gender;
 
     @Column
-    @NotBlank
     private Date birthday;
 
     @Column

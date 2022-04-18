@@ -2,8 +2,10 @@ package cz.upce.fei.nnpia.nnpia_sem.app.movie.repository;
 
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.ActorDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.CrewDto;
+import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.MovieIdTitleDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.MovieListDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.Movie;
+import cz.upce.fei.nnpia.nnpia_sem.app.movie.entity.RandomMovieDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,14 +26,22 @@ public interface MovieRepository extends JpaRepository<Movie, Long>, QueryByExam
     @Query("SELECT  crew.person.id as id, crew.role as role, crew.person.name as name, crew.person.img as img from movie_crew crew WHERE crew.movie.id = :id")
     List<CrewDto> findAllCrewByMovie(Long id);
 
-    //@Query(value = "Select * from Movie where title like %?1% or description like %?1%", nativeQuery = true)
     @Query("SELECT m.id as id, m.img as img, m.title as title, m.release_date as release_date, AVG(r.score) as avgScore " +
             "from Movie m " +
             "LEFT OUTER JOIN Rating r On m.id = r.movie.id " +
             "group by m.id, m.title " +
-            "having m.title like %:search% "
+            "having lower(m.title) like %:search% "
     )
     Page<MovieListDto> searchAll(String search, Pageable pageable);
 
-    //List<MovieListDto> findAllByIds(List<Long> ids);
+    @Query("SELECT m.id as id, m.img as img, m.title as title, m.release_date as release_date, AVG(r.score) as avgScore, " +
+            "m.description as description, m.runtime as runtime " +
+            "from Movie m " +
+            "LEFT OUTER JOIN Rating r On m.id = r.movie.id " +
+            "group by m.id, m.title"
+    )
+    Page<RandomMovieDto> findRandom(Pageable pageable);
+
+    @Query("Select m.id as id, m.title as title from Movie m")
+    List<MovieIdTitleDto> findAllIds();
 }

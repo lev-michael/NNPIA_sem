@@ -29,26 +29,28 @@ public class WatchlistService {
         return watchlistRepository.findAllIdsByUser_Id(userId);
     }
 
-    public void addMovieToWatchlist(UserIdMovieIdDto userIdMovieIdDto) {
+    public Boolean addMovieToWatchlist(UserIdMovieIdDto userIdMovieIdDto) {
         Movie movie = movieRepository.findById(userIdMovieIdDto.getMovieId()).orElse(null);
         User user = userRepository.findById(userIdMovieIdDto.getUserId()).orElse(null);
         if (user == null || movie == null) {
-            return;
+            return false;
         }
         this.watchlistRepository.save(new Watchlist(movie, user));
+        return true;
     }
 
-    public void removeMovieFromWatchlist(UserIdMovieIdDto userIdMovieIdDto) {
+    public Boolean removeMovieFromWatchlist(UserIdMovieIdDto userIdMovieIdDto) {
         Movie movie = movieRepository.findById(userIdMovieIdDto.getMovieId()).orElse(null);
         User user = userRepository.findById(userIdMovieIdDto.getUserId()).orElse(null);
 
         if (user == null || movie == null) {
-            return;
+            return false;
         }
         this.watchlistRepository.delete(new Watchlist(movie, user));
+        return true;
     }
 
     public Page<Movie> getUserMoviesOnWatchlist(Long userId, Pageable pageable, String query) {
-        return watchlistRepository.findAllMoviesByUser_Id(userId, pageable, query);
+        return watchlistRepository.findAllMoviesByUser_Id(userId, pageable, query.toLowerCase());
     }
 }

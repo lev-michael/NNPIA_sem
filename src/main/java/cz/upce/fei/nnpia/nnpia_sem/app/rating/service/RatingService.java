@@ -32,11 +32,6 @@ public class RatingService {
     @Autowired
     private MovieRepository movieRepository;
 
-    public void deleteRating(UserIdMovieIdDto userIdMovieIdDto) {
-        ComposedUserMovieId id = new ComposedUserMovieId(userIdMovieIdDto.getMovieId(), userIdMovieIdDto.getUserId());
-        this.ratingRepository.deleteById(id);
-    }
-
     public Integer getRating(UserIdMovieIdDto userIdMovieIdDto) {
         ComposedUserMovieId id = new ComposedUserMovieId(userIdMovieIdDto.getMovieId(), userIdMovieIdDto.getUserId());
         Optional<Rating> result = ratingRepository.findById(id);
@@ -70,6 +65,6 @@ public class RatingService {
     }
 
     public Page<MovieWithScoreDto> getUserRating(SearchWithUserIdDto userIdDto, Pageable pageable) {
-        return ratingRepository.findAllByUserId(userIdDto.getUserId(), userIdDto.getQuery(), pageable);
+        return ratingRepository.findAllByUserId(userIdDto.getUserId(), userIdDto.getQuery().toLowerCase(), pageable);
     }
 }
