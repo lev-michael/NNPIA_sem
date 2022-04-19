@@ -1,6 +1,8 @@
 # NNPIA semestrální práce - backend
 Backendová aplikace semestrální práce pro předmět NNPIA obsahující zdrojové kódy psané v technologie Java Spring Boot.
 
+Aplikace slouží jako REST API pro fontendovou část, které poskytuje potřebná data o filmech, hercích, členech štábů, hodnocení jednotlivých filmů a watchlistů jednotlivých uživatelů.
+
 ## Datové schéma
 
 Datové schéma se skládá z hlavních tabulek:
