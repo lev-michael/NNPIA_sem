@@ -103,7 +103,7 @@ Pro volání seznamů je také k dispozici vyhledávání pomocí zaslání (nen
 }
 ```
 
-Ukázková odpověď se stránkováním:
+Ukázková odpověď se stránkováním (seznam filmů, dostupné na ./movie/list) :
 ```
 {
     "code": 200,
