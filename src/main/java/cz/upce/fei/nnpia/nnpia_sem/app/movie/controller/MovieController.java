@@ -39,7 +39,7 @@ public class MovieController {
     }
 
     @PostMapping("/edit")
-    public ApiResponse<Long> addMovie(@RequestBody EditMovieDto movieDto) {
+    public ApiResponse<Long> editMovie(@RequestBody EditMovieDto movieDto) {
         Long movieId = movieService.editMovie(movieDto);
         return new ApiResponse<>(HttpStatus.OK.value(), movieId != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, movieId);
     }

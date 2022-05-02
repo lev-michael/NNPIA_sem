@@ -48,6 +48,6 @@ public class Movie {
     private List<Rating> scores;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "movie", targetEntity = GenreMovies.class, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "movie", targetEntity = GenreMovies.class, fetch = FetchType.EAGER)
     private List<GenreMovies> genres;
 }

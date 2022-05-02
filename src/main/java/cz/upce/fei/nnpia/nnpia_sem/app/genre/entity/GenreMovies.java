@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class GenreMovies {
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @Id
     private Genre genre;
 
