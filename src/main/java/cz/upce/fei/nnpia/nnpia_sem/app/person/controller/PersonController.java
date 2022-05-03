@@ -2,7 +2,6 @@ package cz.upce.fei.nnpia.nnpia_sem.app.person.controller;
 
 import cz.upce.fei.nnpia.nnpia_sem.app.config.ApiResponse;
 import cz.upce.fei.nnpia.nnpia_sem.app.config.StausEnum;
-import cz.upce.fei.nnpia.nnpia_sem.app.movie.dto.SearchDto;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.dto.*;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.entity.Person;
 import cz.upce.fei.nnpia.nnpia_sem.app.person.service.PersonService;
@@ -40,9 +39,9 @@ public class PersonController {
         return new ApiResponse<>(HttpStatus.OK.value(), person != null ? StausEnum.SUCCESS : StausEnum.NOT_FOUND, person);
     }
 
-    @PostMapping("/actors/list")
-    public ApiResponse<Page<PersonListItemDto>> searchAllActors(@RequestBody(required = false) SearchDto searchDto, Pageable pageable) {
-        Page<PersonListItemDto> personListItemDtos = personService.searchAllActors(pageable, searchDto.getQuery());
+    @GetMapping("/actors/list")
+    public ApiResponse<Page<PersonListItemDto>> searchAllActors(@RequestParam(required = false) String query, Pageable pageable) {
+        Page<PersonListItemDto> personListItemDtos = personService.searchAllActors(pageable, query != null ? query : "");
         return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, personListItemDtos);
     }
 

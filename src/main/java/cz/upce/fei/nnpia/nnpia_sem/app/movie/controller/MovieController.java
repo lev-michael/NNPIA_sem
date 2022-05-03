@@ -26,9 +26,9 @@ public class MovieController {
         return StausEnum.NOT_FOUND;
     }
 
-    @PostMapping("/list")
-    public ApiResponse<Page<MovieListDto>> searchAllMovies(@RequestBody(required = false) SearchDto searchDto, Pageable pageable) {
-        Page<MovieListDto> movieList = movieService.searchAllMovies(pageable, searchDto == null ? "" : searchDto.getQuery());
+    @GetMapping("/list")
+    public ApiResponse<Page<MovieListDto>> searchAllMovies(@RequestParam(required = false) String query, Pageable pageable) {
+        Page<MovieListDto> movieList = movieService.searchAllMovies(pageable, query == null ? "" : query);
         return new ApiResponse<>(HttpStatus.OK.value(), StausEnum.SUCCESS, movieList);
     }
 
