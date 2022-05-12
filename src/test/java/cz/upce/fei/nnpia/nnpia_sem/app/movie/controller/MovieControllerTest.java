@@ -150,13 +150,9 @@ class MovieControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"NOT_FOUND\",\"result\":null}"));
     }
 
-    /**
-     * Method under test: {@link MovieController#addMovie(EditMovieDto)}
-     */
     @Test
     void testAddMovieSuccess() throws Exception {
         when(this.movieService.editMovie(any())).thenReturn(1L);
-
         EditMovieDto editMovieDto = new EditMovieDto();
         editMovieDto.setDescription("The characteristics of someone or something");
         editMovieDto.setGenres(new ArrayList<>());
@@ -224,51 +220,5 @@ class MovieControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"NOT_FOUND\",\"result\":null}"));
     }
 
-    /**
-     * Method under test: {@link MovieController#findAllActorsByMovie(Long)}
-     */
-    @Test
-    void testFindAllActorsByMovie() throws Exception {
-        when(this.movieService.findAllActors(any())).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/movie/{id}/actors", 123L);
-        MockMvcBuilders.standaloneSetup(this.movieController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
-                .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":[]}"));
-    }
-
-
-    /**
-     * Method under test: {@link MovieController#findAllCrewByMovie(Long)}
-     */
-    @Test
-    void testFindAllCrewByMovie() throws Exception {
-        when(this.movieService.findAllCrew(any())).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/movie/{id}/crew", 123L);
-        MockMvcBuilders.standaloneSetup(this.movieController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
-                .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":[]}"));
-    }
-
-
-    /**
-     * Method under test: {@link MovieController#findAllMovieIds()}
-     */
-    @Test
-    void testFindAllMovieIdsTitles() throws Exception {
-        when(this.movieService.findAllMoviesIdsTitles()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/movie/ids");
-        MockMvcBuilders.standaloneSetup(this.movieController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
-                .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":[]}"));
-    }
 }
 

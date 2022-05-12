@@ -111,7 +111,7 @@ class RatingControllerTest {
      */
     @Test
     void testFindAvgRating2() throws Exception {
-        when(this.ratingService.getAvgRating((Long) any())).thenReturn(10.0d);
+        when(this.ratingService.getAvgRating(any())).thenReturn(10.0d);
         MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/rating/{id}", 123L);
         getResult.characterEncoding("Encoding");
         MockMvcBuilders.standaloneSetup(this.ratingController)
@@ -120,37 +120,6 @@ class RatingControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
                 .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":10.0}"));
-    }
-
-    /**
-     * Method under test: {@link RatingController#findBestRatings()}
-     */
-    @Test
-    void testFindBestRatings() throws Exception {
-        when(this.ratingService.getBestMovies()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rating/best");
-        MockMvcBuilders.standaloneSetup(this.ratingController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
-                .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":[]}"));
-    }
-
-    /**
-     * Method under test: {@link RatingController#findBestRatings()}
-     */
-    @Test
-    void testFindBestRatings2() throws Exception {
-        when(this.ratingService.getBestMovies()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/rating/best");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(this.ratingController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
-                .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":[]}"));
     }
 
     /**
@@ -173,21 +142,6 @@ class RatingControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
                 .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":1}"));
-    }
-
-    /**
-     * Method under test: {@link RatingController#findWorstRatings()}
-     */
-    @Test
-    void testFindWorstRatings() throws Exception {
-        when(this.ratingService.getWorstMovies()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rating/worst");
-        MockMvcBuilders.standaloneSetup(this.ratingController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
-                .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":[]}"));
     }
 
     /**

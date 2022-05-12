@@ -35,21 +35,6 @@ class PersonControllerTest {
     @MockBean
     private PersonService personService;
 
-    /**
-     * Method under test: {@link PersonController#getAllPersonsNamesAndIds()}
-     */
-    @Test
-    void testGetAllPersonsNamesAndIds() throws Exception {
-        when(this.personService.getAllPersonsNamesAndIds()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/person/ids");
-        MockMvcBuilders.standaloneSetup(this.personController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
-                .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":[]}"));
-    }
-
 
     /**
      * Method under test: {@link PersonController#getPerson(Long)}
@@ -126,7 +111,7 @@ class PersonControllerTest {
      */
     @Test
     void testEditPerson() throws Exception {
-        when(this.personService.editPerson((EditPersonDto) any())).thenReturn(1L);
+        when(this.personService.editPerson(any())).thenReturn(1L);
 
         EditPersonDto editPersonDto = new EditPersonDto();
         editPersonDto.setBiography("Biography");
@@ -153,7 +138,7 @@ class PersonControllerTest {
      */
     @Test
     void testEditPersonNotFound() throws Exception {
-        when(this.personService.editPerson((EditPersonDto) any())).thenReturn(null);
+        when(this.personService.editPerson(any())).thenReturn(null);
 
         EditPersonDto editPersonDto = new EditPersonDto();
         editPersonDto.setBiography("Biography");

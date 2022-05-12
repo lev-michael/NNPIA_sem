@@ -32,13 +32,22 @@ class GenreControllerTest {
      */
     @Test
     void testFindAllGenresEmptyArray() throws Exception {
-        when(this.genreService.getAllGenres()).thenReturn(new ArrayList<>());
+        List<Genre> genres = new ArrayList<>();
+        Genre actionGenre = new Genre();
+        actionGenre.setId(1L);
+        actionGenre.setName("Action");
+        Genre comedyGenre = new Genre();
+        comedyGenre.setId(2L);
+        comedyGenre.setName("Comedy");
+        genres.add(actionGenre);
+        genres.add(comedyGenre);
+        when(this.genreService.getAllGenres()).thenReturn(genres);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/genre/list");
         MockMvcBuilders.standaloneSetup(this.genreController)
                 .build()
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":[]}"));
+                .andExpect(MockMvcResultMatchers.content().string("{\"code\":200,\"status\":\"SUCCESS\",\"result\":[{\"id\":1,\"name\":\"Action\"},{\"id\":2,\"name\":\"Comedy\"}]}"));
     }
 
     /**
